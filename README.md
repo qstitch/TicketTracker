@@ -1,5 +1,7 @@
 # Ticket Tracker API
 
+[![CI](https://github.com/qstitch/TicketTracker/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/qstitch/TicketTracker/actions/workflows/ci.yml)
+
 A RESTful web service for tracking software defects and support tickets, built with C# and ASP.NET Core (.NET 10). Tickets follow an enforced lifecycle (Open → In Progress → Resolved → Closed) with validation and business rules covered by automated tests.
 
 ## Tech stack
