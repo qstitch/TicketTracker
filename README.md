@@ -27,6 +27,8 @@ C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Act
 
 ## Reporting queries
 `sql/reports.sql` contains example SQL queries against the tickets table.
+`sql/reports.sql` has reports and data-quality checks. 
+`sql/practice.sql` has basic SQL practice queries, and `sql/seed_data.sql` has sample data.
 
 ## Deployment
 _TODO: add the live URL and deployment notes here once the AWS deployment is complete._
