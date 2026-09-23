@@ -14,5 +14,8 @@ public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(op
         // Store enums as readable text in the database instead of integers.
         ticket.Property(t => t.Status).HasConversion<string>();
         ticket.Property(t => t.Severity).HasConversion<string>();
+
+        modelBuilder.Entity<Ticket>().HasIndex(t => t.Status);
     }
+
 }

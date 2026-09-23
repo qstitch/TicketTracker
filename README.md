@@ -32,5 +32,12 @@ C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Act
 `sql/reports.sql` has reports and data-quality checks. 
 `sql/practice.sql` has basic SQL practice queries, and `sql/seed_data.sql` has sample data.
 
+## Database Views
+- `open_tickets_by_severity`: count of open tickets grouped by severity
+- `stale_open_tickets`: open tickets created more than 7 days ago
+
+Both views and an index on `Status` are created by EF Core migrations,
+so `dotnet ef database update` builds the full schema from code.
+
 ## Deployment
 _TODO: add the live URL and deployment notes here once the AWS deployment is complete._
