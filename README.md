@@ -28,9 +28,9 @@ C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Act
 3. Run tests: `dotnet test`
 
 ## Reporting queries
-`sql/reports.sql` contains example SQL queries against the tickets table.
-`sql/reports.sql` has reports and data-quality checks. 
+`sql/reports.sql` has example reports and data-quality checks.
 `sql/practice.sql` has basic SQL practice queries, and `sql/seed_data.sql` has sample data.
+Run `sql/bad_data_for_checks.sql` after seeding to see each data-quality check catch a problem.
 
 ## Database Views
 - `open_tickets_by_severity`: count of open tickets grouped by severity
