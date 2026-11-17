@@ -1,0 +1,12 @@
+**/bin
+**/obj
+**/node_modules
+.git
+.github
+.vs
+.vscode
+client
+tests
+sql
+TicketTracker-starter
+*.md
