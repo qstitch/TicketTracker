@@ -5,7 +5,7 @@
 A RESTful web service for tracking software defects and support tickets, built with C# and ASP.NET Core (.NET 10). Tickets follow an enforced lifecycle (Open → In Progress → Resolved → Closed) with validation and business rules covered by automated tests.
 
 ## Tech stack
-C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Actions · Docker (local database)
+C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Actions · Docker · Docker Compose
 
 ## Endpoints
 | Method | Route | Description |
@@ -23,9 +23,30 @@ C# · ASP.NET Core · Entity Framework Core · PostgreSQL · xUnit · GitHub Act
 - Resolving a ticket requires resolution notes and records a resolved timestamp.
 
 ## Run locally
-1. Start Postgres: `docker run --name tickets-db -e POSTGRES_PASSWORD=devpass -e POSTGRES_DB=tickets -p 5432:5432 -d postgres:17`
+1. Start Postgres: `docker run --name tickets-db -e POSTGRES_PASSWORD=devpass -e POSTGRES_DB=tickets -p 5432:5432 -d postgres:16`
 2. Run the API: `dotnet run --project src/TicketTracker.Api`
 3. Run tests: `dotnet test`
+
+## Run with Docker
+Runs the API and PostgreSQL together with Docker Compose. You only need [Docker Desktop](https://www.docker.com/products/docker-desktop/) installed and running.
+
+```bash
+docker compose up --build
+```
+
+This builds the API image, starts PostgreSQL, waits for its health check to pass, and applies all EF Core migrations automatically (including the reporting views and the `Status` index). When the log shows `Now listening on: http://[::]:8080`, the API is available at `http://localhost:8080` (health check at `/health`, OpenAPI spec at `/openapi/v1.json`).
+
+PostgreSQL is exposed on host port `5433` (user `postgres`, database `tickets`), so it doesn't clash with the container from "Run locally."
+
+```bash
+docker compose down        # stop and remove containers, keep the data
+docker compose down -v     # also delete the database volume
+```
+
+Notes:
+- The image uses a multi-stage build: the .NET SDK compiles the app, and only the output is copied into the smaller ASP.NET runtime image.
+- The database password in `docker-compose.yml` is for local development only.
+- A `libgssapi_krb5.so.2` warning in the API logs is harmless. It's the Npgsql driver looking for an optional Kerberos library.
 
 ## Reporting queries
 `sql/reports.sql` has example reports and data-quality checks.
