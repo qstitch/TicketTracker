@@ -17,6 +17,16 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 
 builder.Services.AddScoped<TicketService>();
 
+const string FrontendPolicy = "Frontend";
+
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(FrontendPolicy, policy =>
+        policy.WithOrigins("http://localhost:5173")
+              .AllowAnyHeader()
+              .AllowAnyMethod());
+});
+
 var app = builder.Build();
 
 // Apply pending EF Core migrations on startup (fine for a portfolio project).
@@ -29,6 +39,8 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi(); // JSON spec at /openapi/v1.json
 }
+
+app.UseCors(FrontendPolicy);
 
 app.MapControllers();
 app.MapGet("/health", () => Results.Ok(new { status = "healthy" }));
